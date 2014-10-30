@@ -1,19 +1,33 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "mongoose.h"
 
+#define tamanho_buffer 10000
+
+static int segmento_sobre(char *b, size_t s) {
+    snprintf(b,s, "Numero randomico %d<br>", random() % 100);
+    strncat(b, "<hr><h3>Feito pela turma 2011 da Unipac Lafaiete</h3>", s);
+}
+
 static int ev_handler(struct mg_connection *conn, enum mg_event ev) {
+  char buffer[tamanho_buffer];
+  buffer[0] = '\x0';
   switch (ev) {
     case MG_AUTH: return MG_TRUE;
     case MG_REQUEST:
       mg_send_header(conn, "Content-Type", "text/html");
-      mg_printf_data(conn, "<doctype html>"
-	"<html>"
-        "<header><title>EC8</title></header>"
-        "<body>"
-        "<center><h1>Galo Doido</h1></center>"
-        "</body>"
-        "</html>");
+      strncpy(buffer, 
+        "<doctype html>\n"
+	"<html>\n"
+        "<header><title>EC8</title></header>\n"
+        "<body>\n", sizeof(buffer));
+      segmento_sobre(buffer, sizeof(buffer));
+      strncat(buffer, 
+        "</body>\n"
+        "</html>", sizeof(buffer));
+
+      mg_printf_data(conn, buffer);
       return MG_TRUE;
     default: return MG_FALSE;
   }
