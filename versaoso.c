@@ -1,6 +1,3 @@
-#ifndef _VERSAOSO
-#define _VERSAOSO
-
 #include <stdio.h>
 #include <string.h>
 #include <sys/utsname.h>//http://www.scs.stanford.edu/histar/src/pkg/uclibc/include/sys/utsname.h
@@ -20,5 +17,3 @@ int versaoso(char *b, size_t s) {//Função mostra na tela os dados da versão d
   }
 	return 1;
 }
-
-#endif
