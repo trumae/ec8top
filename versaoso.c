@@ -2,6 +2,7 @@
 #include <string.h>
 #include <sys/utsname.h>//http://www.scs.stanford.edu/histar/src/pkg/uclibc/include/sys/utsname.h
 #include "versaoso.h"
+
 int versaoso(char *b, size_t s) {//Função mostra na tela os dados da versão do sistema
   struct utsname my_uname;
   if(uname(&my_uname) == -1){
@@ -17,3 +18,4 @@ int versaoso(char *b, size_t s) {//Função mostra na tela os dados da versão d
   }
 	return 1;
 }
+
