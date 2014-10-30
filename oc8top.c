@@ -2,12 +2,18 @@
 #include <stdlib.h>
 #include <string.h>
 #include "mongoose.h"
+#include "versaoso.h"
 
 #define tamanho_buffer 10000
 
-static int segmento_sobre(char *b, size_t s) {
-    snprintf(b,s, "Numero randomico %d<br>", random() % 100);
-    strncat(b, "<hr><h3>Feito pela turma 2011 da Unipac Lafaiete</h3>", s);
+static int segmento_inicial(char *b, size_t s) {//snprintf substitui o valor no buffer, se usá-lo irá substituir os dados do buffer
+    snprintf(b,s, "<h1>Monitorador de recursos %lu</h1><hr>", random() % 100);
+    return 1;
+}
+
+static int segmento_sobre(char *b, size_t s) {//strncat concatena informações ao buffer, por isso é bom usá-lo somente
+    strncat(b, "<hr><center><h4><i>Feito pela turma 2011 da Unipac Lafaiete - &copy; Todos os direitos reservados</i></h4></center>", s);
+    return 1;
 }
 
 static int ev_handler(struct mg_connection *conn, enum mg_event ev) {
@@ -20,8 +26,12 @@ static int ev_handler(struct mg_connection *conn, enum mg_event ev) {
       strncpy(buffer, 
         "<doctype html>\n"
 	"<html>\n"
-        "<header><title>EC8</title></header>\n"
+        "<header>"
+        "<title>EC8</title>"
+        "</header>\n"
         "<body>\n", sizeof(buffer));
+      segmento_inicial(buffer, sizeof(buffer));
+      versaoso(buffer, sizeof(buffer));//acrescenta as informações de versão do SO
       segmento_sobre(buffer, sizeof(buffer));
       strncat(buffer, 
         "</body>\n"
