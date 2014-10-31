@@ -3,6 +3,8 @@
 #include <string.h>
 #include "mongoose.h"
 #include "versaoso.h"
+#include "numprocessos.h"
+#include "infomemoria.h"
 
 #define tamanho_buffer 10000
 
@@ -35,6 +37,12 @@ static int ev_handler(struct mg_connection *conn,
       
       //acrescenta as informações de versão do SO
       versaoso(buffer, sizeof(buffer));
+
+      //informações sobre quantidade de processos e tempo de atividade
+      infomemoria(buffer, sizeof(buffer));
+
+      //informações sobre memoria RAM
+      numprocessos(buffer, sizeof(buffer));
       
       segmento_sobre(buffer, sizeof(buffer));
       strncat(buffer, 
