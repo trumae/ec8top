@@ -16,7 +16,8 @@ static int segmento_sobre(char *b, size_t s) {//strncat concatena informações 
     return 1;
 }
 
-static int ev_handler(struct mg_connection *conn, enum mg_event ev) {
+static int ev_handler(struct mg_connection *conn, 
+                      enum mg_event ev) {
   char buffer[tamanho_buffer];
   buffer[0] = '\x0';
   switch (ev) {
@@ -31,7 +32,10 @@ static int ev_handler(struct mg_connection *conn, enum mg_event ev) {
         "</header>\n"
         "<body>\n", sizeof(buffer));
       segmento_inicial(buffer, sizeof(buffer));
-      versaoso(buffer, sizeof(buffer));//acrescenta as informações de versão do SO
+      
+      //acrescenta as informações de versão do SO
+      versaoso(buffer, sizeof(buffer));
+      
       segmento_sobre(buffer, sizeof(buffer));
       strncat(buffer, 
         "</body>\n"
