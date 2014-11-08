@@ -3,6 +3,7 @@
 #include <string.h>
 #include <unistd.h>//necessário para a função cpusage
 #include "mongoose.h"
+#include "versaoso.h"
 #include "cpu_usage.h"
 
 #define tamanho_buffer 10000
