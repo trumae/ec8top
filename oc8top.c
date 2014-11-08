@@ -3,6 +3,7 @@
 #include <string.h>
 #include "mongoose.h"
 #include "versaoso.h"
+#include "bateria.h"
 
 #define tamanho_buffer 10000
 
@@ -36,6 +37,9 @@ static int ev_handler(struct mg_connection *conn,
       //acrescenta as informações de versão do SO
       versaoso(buffer, sizeof(buffer));
       
+      //acrescenta as informações da bateria
+      bateria(buffer, sizeof(buffer));
+      
       segmento_sobre(buffer, sizeof(buffer));
       strncat(buffer, 
         "</body>\n"
@@ -52,7 +56,7 @@ int main(void) {
 
   // Create and configure the server
   server = mg_create_server(NULL, ev_handler);
-  mg_set_option(server, "listening_port", "8080");
+  mg_set_option(server, "listening_port", "9090");
 
   // Serve request. Hit Ctrl-C to terminate the program
   printf("Starting on port %s\n", mg_get_option(server, "listening_port"));
@@ -65,3 +69,4 @@ int main(void) {
 
   return 0;
 }
+
