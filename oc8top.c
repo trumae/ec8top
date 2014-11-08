@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>//necessário para a função cpusage
 #include "mongoose.h"
-#include "versaoso.h"
+#include "cpu_usage.h"
 
 #define tamanho_buffer 10000
 
 static int segmento_inicial(char *b, size_t s) {//snprintf substitui o valor no buffer, se usá-lo irá substituir os dados do buffer
-    snprintf(b,s, "<h1>Monitorador de recursos %lu</h1><hr>", random() % 100);
+    snprintf(b,s, "<h1>Monitorador de recursos</h1><hr>");
     return 1;
 }
 
@@ -33,8 +34,9 @@ static int ev_handler(struct mg_connection *conn,
         "<body>\n", sizeof(buffer));
       segmento_inicial(buffer, sizeof(buffer));
       
-      //acrescenta as informações de versão do SO
-      versaoso(buffer, sizeof(buffer));
+      	//acrescenta as informações de versão do SO
+	///versaoso(buffer, sizeof(buffer));
+	cpuusage(buffer, sizeof(buffer));
       
       segmento_sobre(buffer, sizeof(buffer));
       strncat(buffer, 
@@ -45,6 +47,24 @@ static int ev_handler(struct mg_connection *conn,
       return MG_TRUE;
     default: return MG_FALSE;
   }
+}
+
+int cpuusage(char *b, size_t s){//chama a função cpu_usage.c e escreve o resultado em html
+	
+	struct cpu_counters cpu_cnt_start, cpu_cnt_end;
+	char buffer[100];
+
+	read_cpu_counters(&cpu_cnt_start);//primeiro ele começa a fazer a contagem dos contadores da CPU com a struct start
+
+	sleep(1);//dorme por um tempo
+
+	read_cpu_counters(&cpu_cnt_end);//depois ele termina a contagem dos contadores com a struct end
+
+	//escreve no html
+	snprintf(buffer,500, "Utiliza&ccedil&atildeo Total do Processador: %3.2f<br>", cpu_usage(&cpu_cnt_start, &cpu_cnt_end));
+	strncat(b, buffer, s);
+
+	return 0;
 }
 
 int main(void) {
