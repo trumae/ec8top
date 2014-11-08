@@ -10,15 +10,19 @@ int read_cpu_counters(struct cpu_counters *cpu_cnt)
   char *rest = NULL, *token, *str;
   int ntok = 0;
   int err = 0;
+char buffer[100];
 
+/*abre o proc/stat */
   f = fopen("/proc/stat", "r");
   if (!f) {
-    fprintf(stderr, "error: can't read the /proc/stat\n");
-    return -1;
+	strncat(b, "Erro: N&atildeo foi poss&iacutevel ler /proc/stat<br>", sizeof(buffer));
+    	fprintf(stderr, "Erro: Não foi possível ler /proc/stat\n");
+    	return -1;
   }
 
-  /* the cpu counters resides in the first line */
+  /*os contadores da CPU estão na primeira linha */
   if (!fgets(buf, 256, f)) {
+	strncat(b, "Erro: Contadores da CPU inv&aacutelidos /proc/stat<br>", sizeof(buffer));
     fprintf(stderr, "error: invalid cpu counters in /proc/stat \n");
     err = -1;
     goto out;
@@ -29,7 +33,7 @@ int read_cpu_counters(struct cpu_counters *cpu_cnt)
   while ((token = strtok_r(str, " ", &rest)) != NULL) {
     ++ntok;
     str = rest;
-    /* skip the fist token */
+    /* pula a primeira linha*/
     if (ntok == 1)
       continue;
     if (ntok < 5)
