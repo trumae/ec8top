@@ -56,7 +56,7 @@ int main(void) {
 
   // Create and configure the server
   server = mg_create_server(NULL, ev_handler);
-  mg_set_option(server, "listening_port", "9090");
+  mg_set_option(server, "listening_port", "8080");
 
   // Serve request. Hit Ctrl-C to terminate the program
   printf("Starting on port %s\n", mg_get_option(server, "listening_port"));
