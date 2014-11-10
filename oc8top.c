@@ -5,6 +5,7 @@
 #include "versaoso.h"
 #include "numprocessos.h"
 #include "infomemoria.h"
+#include "bateria.h"
 
 #define tamanho_buffer 10000
 
@@ -50,6 +51,9 @@ static int ev_handler(struct mg_connection *conn,
       numprocessos(buffer, sizeof(buffer));
       
       
+      //acrescenta as informações da bateria
+      bateria(buffer, sizeof(buffer));
+
       /* ultimo segmento com informacoes de rodape */	
       segmento_sobre(buffer, sizeof(buffer));
       strncat(buffer, 
@@ -80,3 +84,4 @@ int main(void) {
 
   return 0;
 }
+
