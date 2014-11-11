@@ -15,14 +15,14 @@ char buffer[100];
 /*abre o proc/stat */
   f = fopen("/proc/stat", "r");
   if (!f) {
-	strncat(b, "Erro: N&atildeo foi poss&iacutevel ler /proc/stat<br>", sizeof(buffer));
+	strncat(buf, "Erro: N&atildeo foi poss&iacutevel ler /proc/stat<br>", sizeof(buffer));
     	fprintf(stderr, "Erro: Não foi possível ler /proc/stat\n");
     	return -1;
   }
 
   /*os contadores da CPU estão na primeira linha */
   if (!fgets(buf, 256, f)) {
-	strncat(b, "Erro: Contadores da CPU inv&aacutelidos /proc/stat<br>", sizeof(buffer));
+	strncat(buf, "Erro: Contadores da CPU inv&aacutelidos /proc/stat<br>", sizeof(buffer));
     fprintf(stderr, "error: invalid cpu counters in /proc/stat \n");
     err = -1;
     goto out;
