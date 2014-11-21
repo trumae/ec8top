@@ -11,7 +11,14 @@ public class MainActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        startHTTP();
+
+        Thread thread = new Thread(){
+           public void run(){
+              startHTTP();
+           }
+        };
+        thread.start();
+
     }
 
     private native String startHTTP();

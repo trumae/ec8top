@@ -7,7 +7,7 @@
 <TextView
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:text="Hello World, MainActivity"
+    android:text="Para acessar o oc8top no browser utilize o endereco http://127.0.0.1:8080/"
     />
 </LinearLayout>
 
