@@ -3,65 +3,88 @@
 #include <string.h>
 #include "mongoose.h"
 #include "versaoso.h"
+#include "bateria.h"
 #include "numprocessos.h"
 #include "infomemoria.h"
-#include "bateria.h"
+#include "layout.h"
 
-#define tamanho_buffer 10000
-
-static int segmento_inicial(char *b, size_t s) {//snprintf substitui o valor no buffer, se usá-lo irá substituir os dados do buffer
-    snprintf(b,s, "<h1>Monitorador de recursos %lu</h1><hr>", random() % 100);
-    return 1;
-}
-
-static int segmento_sobre(char *b, size_t s) {//strncat concatena informações ao buffer, por isso é bom usá-lo somente
-    strncat(b, "<hr><center><h4><i>Feito pela turma 2011 da Unipac Lafaiete - &copy; Todos os direitos reservados</i></h4></center>", s);
-    return 1;
-}
+#define tamanho_buffer 150000
 
 static int ev_handler(struct mg_connection *conn, 
-                      enum mg_event ev) { //funcao que abriga os codigos html da pagina
+                      enum mg_event ev) {
   char buffer[tamanho_buffer];
   buffer[0] = '\x0';
+
   switch (ev) {
-    case MG_AUTH: return MG_TRUE;
+    case MG_AUTH:
+	return MG_MORE;
     case MG_REQUEST:
-      mg_send_header(conn, "Content-Type", "text/html");
-	//inicio da pagina      
-	strncpy(buffer, 
-        "<doctype html>\n"
-	"<html>\n"
-        "<header>"
-        "<title>EC8</title>"
-        "</header>\n"
-        "<body>\n", sizeof(buffer)); 
-	
-      //acrescenta informacoes iniciais da pagina 
-      segmento_inicial(buffer, sizeof(buffer));
-      
-      /* a partir daqui serao colodas as funcoes que irao compor a pagina: */
+    //REQUISIÇÕES DE PÁGINA
+    //Toda requisição, seja digitando URL,
+    //ou uma chamada css ou javascript
+    //ativa esta opção
+	//printf("[%d] %s\n", strlen(conn->uri), conn->uri);
+	//se nao tiver nada na url ele executa esse texto, caso contrario executa a url
+	if(strlen(conn->uri)<=1){
+		mg_send_header(conn, "Content-Type", "text/html");
+		strncpy(buffer, "", sizeof(buffer));
+ 
+		segmento_inicial(buffer, sizeof(buffer));
 
-      //acrescenta as informações de versão do SO
-      versaoso(buffer, sizeof(buffer));
+		//div com informações da bateria
+		strncat(buffer,      
+		"<div class=\"float-left\" style=\"width:400px\">\r\n"
+		"<div class=\"fundo\"></div><div class=\"texto\">\r\n",
+		sizeof(buffer));
+		      //acrescenta as informações da bateria
+		      bateria(buffer, sizeof(buffer));  
+		strncat(buffer,   
+		"</div>\r\n"
+		"</div>\r\n",
+		sizeof(buffer));
 
-      //informações sobre quantidade de processos e tempo de atividade
-      infomemoria(buffer, sizeof(buffer));
+		//div com informações do S.O.
+		strncat(buffer,      
+		"<div class=\"float-right\" style=\"width:400px\">\r\n"
+		"<div class=\"fundo\"></div><div class=\"texto\">\r\n",
+		sizeof(buffer));
+		      //acrescenta as informações do S.O.
+		      versaoso(buffer, sizeof(buffer));
+		strncat(buffer,   
+		"</div>\r\n"
+		"</div>\r\n",
+		sizeof(buffer));
 
-      //informações sobre memoria RAM
-      numprocessos(buffer, sizeof(buffer));
-      
-      
-      //acrescenta as informações da bateria
-      bateria(buffer, sizeof(buffer));
+		//div com informações sobre memoria RAM
+		strncat(buffer,      
+		"<div class=\"float-left\" style=\"width:400px\">\r\n"
+		"<div class=\"fundo\"></div><div class=\"texto\">\r\n",
+		sizeof(buffer));
+		      //acrescenta as informações sobre memoria RAM
+		      numprocessos(buffer, sizeof(buffer));
+		strncat(buffer,   
+		"</div>\r\n"
+		"</div>\r\n",
+		sizeof(buffer));
 
-      /* ultimo segmento com informacoes de rodape */	
-      segmento_sobre(buffer, sizeof(buffer));
-      strncat(buffer, 
-        "</body>\n"
-        "</html>", sizeof(buffer));
+		//div com informações sobre quantidade de processos e tempo de atividade
+		strncat(buffer,      
+		"<div class=\"float-right\" style=\"width:400px\">\r\n"
+		"<div class=\"fundo\"></div><div class=\"texto\">\r\n",
+		sizeof(buffer));
+		      //informações sobre quantidade de processos e tempo de atividade
+		      infomemoria(buffer, sizeof(buffer));
+		strncat(buffer,   
+		"</div>\r\n"
+		"</div>\r\n",
+		sizeof(buffer));
 
-      mg_printf_data(conn, buffer);
-      return MG_TRUE;
+		segmento_final(buffer, sizeof(buffer));
+
+    		mg_printf_data(conn, buffer);
+
+    		return MG_TRUE;
+    	}
     default: return MG_FALSE;
   }
 }
@@ -71,7 +94,8 @@ int main(void) {
 
   // Create and configure the server
   server = mg_create_server(NULL, ev_handler);
-  mg_set_option(server, "listening_port", "8080");  //porta usada e a porta 8080
+  mg_set_option(server, "document_root", ".");
+  mg_set_option(server, "listening_port", "8080");
 
   // Serve request. Hit Ctrl-C to terminate the program
   printf("Starting on port %s\n", mg_get_option(server, "listening_port"));
