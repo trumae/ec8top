@@ -28,4 +28,6 @@
 *.x86_64
 *.hex
 
+android/obj
+*~
 oc8top
