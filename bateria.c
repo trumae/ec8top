@@ -27,7 +27,10 @@ int bateria(char *b, size_t s){
     if (arquivo == 0)
       arquivo = fopen("/sys/class/power_supply/BAT0/energy_full", "r");
     if (arquivo == 0)
+    {
+      strncat(b, "<br><p>Dispositivo Desktop</p>", s); 
       return -1;
+    }
       //O nível da bateria não pôde ser lido
       
     //atribuindo o total da bateria a um float
@@ -44,7 +47,10 @@ int bateria(char *b, size_t s){
     if (arquivo == 0)
       arquivo = fopen("/sys/class/power_supply/BAT0/energy_now", "r");
     if (arquivo == 0)
+    {
+      strncat(b, "O arquivo _now nao pode ser lido", s); 
       return -1;
+    }
       //O nível da bateria não pôde ser lido    
       
     //atribuindo a carga total ao float
@@ -58,7 +64,7 @@ int bateria(char *b, size_t s){
     fclose(arquivo);
     
     
-    snprintf(buffer,TAMBUFF, "Porcentagem da bateria: %.0f%%", valor);
+    snprintf(buffer,TAMBUFF, "<br><p>Porcentagem da bateria: %.0f%%</p>", valor);
     strncat(b, buffer, s);     
 
     //retorna sucesso
