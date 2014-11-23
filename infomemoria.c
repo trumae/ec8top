@@ -16,10 +16,18 @@ int infomemoria(char *b, size_t s) {//Função que que mostra status da memoria 
 	buffer[0] = '\x0';
 	
 	/*impressao das informacoes*/
-	snprintf(buffer,500, "<p>Total de Mem&oacuteria RAM: %5.1f MB<br>Total de Mem&oacuteria RAM livre: %5.1f MB<br>Total de Mem&oacuteria 			RAM em uso: %5.1f MB</p>",
+	snprintf(buffer,500, "<p>Total de Mem&oacuteria RAM: %5.1fMB<br>Total de Mem&oacuteria RAM livre: %5.1fMB<br>Total de Mem&oacuteria 			RAM em uso: %5.1fMB</p>",
        		si.totalram / megabyte,si.freeram / megabyte , (si.totalram - si.freeram) / megabyte);
-	strncat(b, "<h2>Informa&ccedil&otildees sobre a Mem&oacuteria RAM: </h2>", s);
+	strncat(b, 
+		"<div id='memoria' class=\"coluna\">\r\n"
+		"<figure class=\"foto\"><img src=\"images/03.png\"></figure>\r\n"
+	, s);
+
 	strncat(b, buffer, s);
+
+	strncat(b, 	
+		"</div>\r\n"
+	, s);
 
   
 	return 1;

@@ -31,53 +31,17 @@ static int ev_handler(struct mg_connection *conn,
  
 		segmento_inicial(buffer, sizeof(buffer));
 
-		//div com informações da bateria
-		strncat(buffer,      
-		"<div class=\"float-left\" style=\"width:400px\">\r\n"
-		"<div class=\"fundo\"></div><div class=\"texto\">\r\n",
-		sizeof(buffer));
-		      //acrescenta as informações da bateria
-		      bateria(buffer, sizeof(buffer));  
-		strncat(buffer,   
-		"</div>\r\n"
-		"</div>\r\n",
-		sizeof(buffer));
+		//acrescenta as informações do S.O.
+		versaoso(buffer, sizeof(buffer));
 
-		//div com informações do S.O.
-		strncat(buffer,      
-		"<div class=\"float-right\" style=\"width:400px\">\r\n"
-		"<div class=\"fundo\"></div><div class=\"texto\">\r\n",
-		sizeof(buffer));
-		      //acrescenta as informações do S.O.
-		      versaoso(buffer, sizeof(buffer));
-		strncat(buffer,   
-		"</div>\r\n"
-		"</div>\r\n",
-		sizeof(buffer));
+		//acrescenta as informações sobre memoria RAM
+		numprocessos(buffer, sizeof(buffer));
 
-		//div com informações sobre memoria RAM
-		strncat(buffer,      
-		"<div class=\"float-left\" style=\"width:400px\">\r\n"
-		"<div class=\"fundo\"></div><div class=\"texto\">\r\n",
-		sizeof(buffer));
-		      //acrescenta as informações sobre memoria RAM
-		      numprocessos(buffer, sizeof(buffer));
-		strncat(buffer,   
-		"</div>\r\n"
-		"</div>\r\n",
-		sizeof(buffer));
+		//informações sobre quantidade de processos e tempo de atividade
+		infomemoria(buffer, sizeof(buffer));
 
-		//div com informações sobre quantidade de processos e tempo de atividade
-		strncat(buffer,      
-		"<div class=\"float-right\" style=\"width:400px\">\r\n"
-		"<div class=\"fundo\"></div><div class=\"texto\">\r\n",
-		sizeof(buffer));
-		      //informações sobre quantidade de processos e tempo de atividade
-		      infomemoria(buffer, sizeof(buffer));
-		strncat(buffer,   
-		"</div>\r\n"
-		"</div>\r\n",
-		sizeof(buffer));
+		//acrescenta as informações da bateria
+		bateria(buffer, sizeof(buffer));  
 
 		segmento_final(buffer, sizeof(buffer));
 
