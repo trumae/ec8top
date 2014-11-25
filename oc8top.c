@@ -27,6 +27,7 @@ static int ev_handler(struct mg_connection *conn,
 	//se nao tiver nada na url ele executa esse texto, caso contrario executa a url
 	if(strlen(conn->uri)<=1){
 		mg_send_header(conn, "Content-Type", "text/html");
+		mg_send_header(conn, "Refresh", "2");
 		strncpy(buffer, "", sizeof(buffer));
  
 		segmento_inicial(buffer, sizeof(buffer));
