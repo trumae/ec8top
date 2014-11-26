@@ -3,7 +3,7 @@ CC=gcc
 # variaveis com diretorios
 LIB=./
 INCLUDE=./
-# opcoes de compilacao
+# opcoes de compilacao 
 LIBFLAGS = -llayout -lversaoso -lbateria -linfomemoria -lnumprocessos -lcpu_usage -g
 FLAGS = -Wall -lpthread
 all: layout versaoso bateria memoria processos cpu_usage
