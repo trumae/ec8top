@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <unistd.h>//necessário para a cpu_resultado (função sleep)
 #include "cpu_usage.h"
 
 int read_cpu_counters(struct cpu_counters *cpu_cnt)
@@ -51,4 +52,30 @@ float cpu_usage(const struct cpu_counters *cpu_cnt_start,
 
 return ((float)(cpu_cnt_end->work_jiffies - cpu_cnt_start->work_jiffies));
 }
+
+int cpu_resultado(char *b, size_t s){// escreve o resultado em html
+	
+	struct cpu_counters cpu_cnt_start, cpu_cnt_end;
+	char buffer[100];
+
+	read_cpu_counters(&cpu_cnt_start);//primeiro ele começa a fazer a contagem dos contadores da CPU com a struct start
+
+	sleep(1);//dorme por um tempo
+
+	read_cpu_counters(&cpu_cnt_end);//depois ele termina a contagem dos contadores com a struct end
+
+	//escreve no html
+	/*o segundo %(do html) gera dois warnig oqe nao interfere na na operação do código*/
+	snprintf(buffer,500,"<p>Utiliza&ccedil&atildeo do Processador: %3.2f%\r\n", cpu_usage(&cpu_cnt_start, &cpu_cnt_end));
+	strncat(b, 
+		"<div id='processos' class=\"coluna\">\r\n"
+		"<figure class=\"foto\"><img src=\"images/02.png\"></figure>\r\n"
+		/*retirado devido a aparência não estar de acordo com a formatação*/
+		//"<h2>Atividade da M&aacutequina e Processos: </h2>\r\n"
+	, s);
+	strncat(b, buffer, s);
+
+	return 0;
+}
+
 
