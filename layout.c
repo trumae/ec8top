@@ -827,7 +827,7 @@ int segmento_final(char *b, size_t s){
     char buffer[TAMBUFF];
     buffer[0] = '\x0';
 
-    //segmento final do html
+    // segmento final do html
     strncpy(buffer,    
 "</section>\r\n"
 "\r\n"
