@@ -63,20 +63,11 @@ int bateria(char *b, size_t s){
     }
     fclose(arquivo);
     
+    //coloca as informacoes no buffer da funcao
+    snprintf(buffer,TAMBUFF, "<h2>Bateria: %.0f%%</h2>", valor);
     
-    snprintf(buffer,TAMBUFF, "<h2>Bateria: %.0f%%</h2>", valor);
-    strncat(b,
-	"<div id='bateria' class=\"coluna\">\r\n"
-	"<figure class=\"foto\"><img src=\"images/04.png\"></figure>\r\n"
-    ,s);
-    snprintf(buffer,TAMBUFF, "<h2>Bateria: %.0f%%</h2>", valor);
-    strncat(b,
-	buffer
-    , s);
-    snprintf(buffer,TAMBUFF, "<h2>Bateria: %.0f%%</h2>", valor);
-    strncat(b,
-	"</div>\r\n" 
-    , s);     
+    //coloca as informacoes no buffer do projeto
+    strncat(b, buffer, s);
 
     //retorna sucesso
     return 1;

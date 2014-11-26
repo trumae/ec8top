@@ -20,18 +20,9 @@ int numprocessos(char *b, size_t s) {//Função que que mostra quantos processos
 	/*impressao das informacoes*/
 	snprintf(buffer,500, "<p>Tempo de funcionamento do sistema: %ld dias, %ld:%02ld:%02ld h <br> Quantidade de processo em 			execu&ccedil&atildeo:  %d Procesos</p>",
        		si.uptime / dia , (si.uptime % dia) / hora,(si.uptime % hora) / minuto , si.uptime % minuto , si.procs);
-	strncat(b, 
-		"<div id='processos' class=\"coluna\">\r\n"
-		"<figure class=\"foto\"><img src=\"images/02.png\"></figure>\r\n"
-		"<h2>Atividade da M&aacutequina e Processos: </h2>\r\n"
-	, s);
-
+	
+	//coloca as informacoes no buffer do projeto
 	strncat(b, buffer, s);
-
-	strncat(b, 
-		"</div>\r\n"
-	, s);
-
   
 	return 1;
 }
