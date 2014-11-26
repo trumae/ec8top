@@ -22,7 +22,7 @@ int numprocessos(char *b, size_t s) {//Função que que mostra quantos processos
 	snprintf(buffer,500, "Tempo de funcionamento do sistema: %ld dias, %ld:%02ld:%02ld h <br> Quantidade de processo em 			execu&ccedil&atildeo:  %d Procesos</p>",
        		si.uptime / dia , (si.uptime % dia) / hora,(si.uptime % hora) / minuto , si.uptime % minuto , si.procs);	
 
-	/* Foi comentado e passado para a cpu_usage.c, para que sejam impressos os dados do uso da cpu e as informações sobre os processos*/
+	/*  Foi comentado e passado para a cpu_usage.c, para que sejam impressos os dados do uso da cpu e as informações sobre os processos*/
 	/*strncat(b, 
 		"<div id='processos' class=\"coluna\">\r\n"
 		"<figure class=\"foto\"><img src=\"images/02.png\"></figure>\r\n"
