@@ -23,26 +23,59 @@ static int ev_handler(struct mg_connection *conn,
     //Toda requisição, seja digitando URL,
     //ou uma chamada css ou javascript
     //ativa esta opção
-	//printf("[%d] %s\n", strlen(conn->uri), conn->uri);
-	//se nao tiver nada na url ele executa esse texto, caso contrario executa a url
-	if(strlen(conn->uri)<=1){
+    //printf("[%d] %s\n", strlen(conn->uri), conn->uri);
+	
+	//caso a url seja os nomes das funcoes, o mongoose retorna o html referente a elas
+	if (strcmp (conn->uri, "/dinamic_versaoso") == 0){
+
 		mg_send_header(conn, "Content-Type", "text/html");
-		mg_send_header(conn, "Refresh", "2");
-		strncpy(buffer, "", sizeof(buffer));
- 
-		segmento_inicial(buffer, sizeof(buffer));
 
 		//acrescenta as informações do S.O.
 		versaoso(buffer, sizeof(buffer));
+		
+		mg_printf_data(conn, buffer);
+		return MG_TRUE;
 
-		//acrescenta as informações sobre memoria RAM
+
+	}
+        if (strcmp (conn->uri, "/dinamic_numprocessos") == 0){
+
+		mg_send_header(conn, "Content-Type", "text/html");
+
+		//acrescenta as informações da quantidade de processos sendo executados.
 		numprocessos(buffer, sizeof(buffer));
+		
+		mg_printf_data(conn, buffer);
+		return MG_TRUE;
+	}
 
-		//informações sobre quantidade de processos e tempo de atividade
+        if (strcmp (conn->uri, "/dinamic_infomemoria") == 0){
+
+		mg_send_header(conn, "Content-Type", "text/html");
+
+		//acrescenta as informações da memória RAM.
 		infomemoria(buffer, sizeof(buffer));
 
-		//acrescenta as informações da bateria
-		bateria(buffer, sizeof(buffer));  
+		mg_printf_data(conn, buffer);
+		return MG_TRUE;
+	}
+	if (strcmp (conn->uri, "/dinamic_bateria") == 0){
+
+		mg_send_header(conn, "Content-Type", "text/html");
+
+		//acrescenta as informações da bateria.
+		bateria(buffer, sizeof(buffer));
+
+		mg_printf_data(conn, buffer);
+		return MG_TRUE;
+	}
+
+
+	//se nao tiver nada na url ele executa esse texto, caso contrario execut a a url
+	if(strlen(conn->uri)<=1){
+		mg_send_header(conn, "Content-Type", "text/html");
+
+		segmento_inicial(buffer, sizeof(buffer));
 
 		segmento_final(buffer, sizeof(buffer));
 
