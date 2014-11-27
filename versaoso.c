@@ -13,14 +13,11 @@ int versaoso(char *b, size_t s) {//Função mostra na tela os dados da versão d
     buffer[0] = '\x0';
     snprintf(buffer,500, "<p>S.O.: %s<br>Nome personalizado: %s<br>Release: %s<br>Vers&atildeo: %s<br>Arquitetura: %s</p>",
        my_uname.sysname, my_uname.nodename, my_uname.release,my_uname.version,my_uname.machine);
-    
-    strncat(b,
-	"<div id='versao' class=\"coluna\">\r\n"
-	"<figure class=\"foto\"><img src=\"images/01.png\"></figure>\r\n"
-    , s);
+
+    //acrescenta ao buffer do projeto os dados contidos no buffer da função
     strncat(b, buffer, s);
 
-    strncat(b, "</div>\r\n", s);
+
   }
 	return 1;
 }

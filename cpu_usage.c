@@ -66,13 +66,9 @@ int cpu_resultado(char *b, size_t s){// escreve o resultado em html
 
 	//escreve no html
 	/*o segundo %(do html) gera dois warnig oqe nao interfere na na operação do código*/
-	snprintf(buffer,500,"<p>Utiliza&ccedil&atildeo do Processador: %3.2f%\r\n", cpu_usage(&cpu_cnt_start, &cpu_cnt_end));
-	strncat(b, 
-		"<div id='processos' class=\"coluna\">\r\n"
-		"<figure class=\"foto\"><img src=\"images/02.png\"></figure>\r\n"
-		/*retirado devido a aparência não estar de acordo com a formatação*/
-		//"<h2>Atividade da M&aacutequina e Processos: </h2>\r\n"
-	, s);
+	snprintf(buffer,500,"Utiliza&ccedil&atildeo do Processador: %3.2f%\r\n", cpu_usage(&cpu_cnt_start, &cpu_cnt_end));
+	
+	//coloca as informacoes no buffer do projeto
 	strncat(b, buffer, s);
 
 	return 0;
