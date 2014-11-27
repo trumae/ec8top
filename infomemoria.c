@@ -16,8 +16,8 @@ int infomemoria(char *b, size_t s) {//Função que que mostra status da memoria 
 	buffer[0] = '\x0';
 	
 	/*impressao das informacoes*/
-	snprintf(buffer,500, "<p>Total de Mem&oacuteria RAM: %5.1fMB<br>Total de Mem&oacuteria RAM livre: %5.1fMB<br>Total de Mem&oacuteria 			RAM em uso: %5.1fMB</p>",
-       		si.totalram / megabyte,si.freeram / megabyte , (si.totalram - si.freeram) / megabyte);
+	snprintf(buffer,500, "<p>Total de Mem&oacuteria RAM: %5.1fMB<br>Total de Mem&oacuteria RAM em uso: %5.1fMB<br>Total de Mem&oacuteria RAM livre: %5.1fMB</p>",
+       		si.totalram / megabyte , (si.totalram - si.freeram) / megabyte , si.freeram / megabyte);
 
 	//acrescenta ao buffer do projeto os dados contidos no buffer da função
 	strncat(b, buffer, s);
