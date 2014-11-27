@@ -65,7 +65,7 @@ int cpu_resultado(char *b, size_t s){// escreve o resultado em html
 	read_cpu_counters(&cpu_cnt_end);//depois ele termina a contagem dos contadores com a struct end
 
 	//escreve no html
-	/*o segundo %(do html) gera dois warnig oqe nao interfere na na operação do código*/
+	/* o segundo %(do html) gera dois warnig oqe nao interfere na na operação do código*/
 	snprintf(buffer,500,"Utiliza&ccedil&atildeo do Processador: %3.2f%\r\n", cpu_usage(&cpu_cnt_start, &cpu_cnt_end));
 	
 	//coloca as informacoes no buffer do projeto
