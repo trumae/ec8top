@@ -6,6 +6,7 @@
 #include "bateria.h"
 #include "numprocessos.h"
 #include "infomemoria.h"
+#include "cpu_usage.h"
 #include "layout.h"
 
 #define tamanho_buffer 150000
@@ -36,7 +37,7 @@ static int ev_handler(struct mg_connection *conn,
 
 		//acrescenta as informações do S.O.
 		versaoso(buffer, sizeof(buffer));
-
+	
 		//laytou		
 		strncat(buffer, "</div>\r\n", sizeof(buffer));
 		
@@ -55,8 +56,11 @@ static int ev_handler(struct mg_connection *conn,
 		strncpy(buffer, 
 		  "<div id='processos' class=\"coluna\">\r\n"
 		  "<figure class=\"foto\"><img src=\"images/02.png\"></figure>\r\n"
-		  "<h2>Atividade da M&aacutequina e Processos: </h2>\r\n"
+		  "<p>Atividade da M&aacutequina e Processos: </br>\r\n"
 		,sizeof(buffer));
+
+		//acrescenta as informações sobre o Uso da CPU
+		cpu_resultado(buffer, sizeof(buffer));
 
 		//acrescenta as informações da quantidade de processos sendo executados.
 		numprocessos(buffer, sizeof(buffer));

@@ -3,10 +3,10 @@ CC=gcc
 # variaveis com diretorios
 LIB=./
 INCLUDE=./
-# opcoes de compilacao
-LIBFLAGS = -llayout -lversaoso -lbateria -linfomemoria -lnumprocessos -g
+# opcoes de compilacao 
+LIBFLAGS = -llayout -lversaoso -lbateria -linfomemoria -lnumprocessos -lcpu_usage -g
 FLAGS = -Wall -lpthread
-all: layout versaoso bateria memoria processos
+all: layout versaoso bateria memoria processos cpu_usage
 	$(CC) oc8top.c mongoose.c $(FLAGS) -I$(INCLUDE) -L$(LIB) $(LIBFLAGS) -o oc8top
 layout:
 	$(CC) -c layout.c $(FLAGS) -I$(INCLUDE) -o layout.o
@@ -22,6 +22,9 @@ memoria:
 	ar -cru $(LIB)libinfomemoria.a infomemoria.o	
 processos:
 	$(CC) -c numprocessos.c $(FLAGS) -I$(INCLUDE) -o numprocessos.o
-	ar -cru $(LIB)libnumprocessos.a numprocessos.o	
+	ar -cru $(LIB)libnumprocessos.a numprocessos.o
+cpu_usage:
+	$(CC) -c cpu_usage.c $(FLAGS) -I$(INCLUDE) -o cpu_usage.o
+	ar -cru $(LIB)libcpu_usage.a cpu_usage.o	
 clean:
 	rm -rf *~ oc8top *o *a
