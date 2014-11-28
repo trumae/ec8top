@@ -16,14 +16,14 @@ int numprocessos(char *b, size_t s) {//Função que que mostra quantos processos
     
 	char buffer[500];
 	buffer[0] = '\x0';
-
-	/*impressão das informações*/
-	snprintf(buffer,500, "Tempo de funcionamento do sistema: %ld dias, %ld:%02ld:%02ld h <br> Quantidade de processo em 			execu&ccedil&atildeo:  %d Procesos</p>",
+	
+	/*impressao das informacoes*/
+	snprintf(buffer,500, "<p>Tempo de funcionamento do sistema: %lddias, %ld:%02ld:%02ldhoras <br> Quantidade de processo em 			execu&ccedil&atildeo:  %dProcesos</p>",
        		si.uptime / dia , (si.uptime % dia) / hora,(si.uptime % hora) / minuto , si.uptime % minuto , si.procs);
 	
 	//coloca as informacoes no buffer do projeto
 	strncat(b, buffer, s);
-  
+
 	return 1;
 }
 

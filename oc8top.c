@@ -25,99 +25,60 @@ static int ev_handler(struct mg_connection *conn,
     //ou uma chamada css ou javascript
     //ativa esta opção
     //printf("[%d] %s\n", strlen(conn->uri), conn->uri);
-	if (strcmp (conn->uri, "/versaoso") == 0){
+	
+	//caso a url seja os nomes das funcoes, o mongoose retorna o html referente a elas
+	if (strcmp (conn->uri, "/dinamic_versaoso") == 0){
 
 		mg_send_header(conn, "Content-Type", "text/html");
 
-		//layout
-		strncpy(buffer,
-		  "<div id='versao' class=\"coluna\">\r\n"
-	  	  "<figure class=\"foto\"><img src=\"images/01.png\"></figure>\r\n"
-		,sizeof(buffer));
-
 		//acrescenta as informações do S.O.
 		versaoso(buffer, sizeof(buffer));
-	
-		//laytou		
-		strncat(buffer, "</div>\r\n", sizeof(buffer));
 		
 		mg_printf_data(conn, buffer);
 		return MG_TRUE;
 
-
 	}
-	
-	//caso a url seja os nomes das funcoes, o mongoose retorna o html referente a elas
-        if (strcmp (conn->uri, "/numprocessos") == 0){
+
+        if (strcmp (conn->uri, "/dinamic_numprocessos") == 0){
 
 		mg_send_header(conn, "Content-Type", "text/html");
-
-		//layout
-		strncpy(buffer, 
-		  "<div id='processos' class=\"coluna\">\r\n"
-		  "<figure class=\"foto\"><img src=\"images/02.png\"></figure>\r\n"
-		  "<p>Atividade da M&aacutequina e Processos: </br>\r\n"
-		,sizeof(buffer));
 
 		//acrescenta as informações sobre o Uso da CPU
 		cpu_resultado(buffer, sizeof(buffer));
 
 		//acrescenta as informações da quantidade de processos sendo executados.
 		numprocessos(buffer, sizeof(buffer));
-
-		//laytou		
-		strncat(buffer, "</div>\r\n", sizeof(buffer));
 		
 		mg_printf_data(conn, buffer);
 		return MG_TRUE;
 	}
 
-        if (strcmp (conn->uri, "/infomemoria") == 0){
+        if (strcmp (conn->uri, "/dinamic_infomemoria") == 0){
 
 		mg_send_header(conn, "Content-Type", "text/html");
-
-		//layout
-		strncpy(buffer, 
-		  "<div id='memoria' class=\"coluna\">\r\n"
-		  "<figure class=\"foto\"><img src=\"images/03.png\"></figure>\r\n"
-		, sizeof(buffer));
 
 		//acrescenta as informações da memória RAM.
 		infomemoria(buffer, sizeof(buffer));
-		
-		//layout
-		strncat(buffer, "</div>\r\n", sizeof(buffer));
 
 		mg_printf_data(conn, buffer);
 		return MG_TRUE;
 	}
-	if (strcmp (conn->uri, "/bateria") == 0){
+
+	if (strcmp (conn->uri, "/dinamic_bateria") == 0){
 
 		mg_send_header(conn, "Content-Type", "text/html");
 
-		//layout
-		strncpy(buffer,
-		  "<div id='infobateria' class=\"coluna\">\r\n"
-		  "<figure class=\"foto\"><img src=\"images/04.png\"></figure>\r\n"
-		,sizeof(buffer));
-
 		//acrescenta as informações da bateria.
 		bateria(buffer, sizeof(buffer));
-		
-		//layout
-		strncat(buffer, "</div>\r\n", sizeof(buffer)); 
 
 		mg_printf_data(conn, buffer);
 		return MG_TRUE;
 	}
-
 
 	//se nao tiver nada na url ele executa esse texto, caso contrario execut a a url
 	if(strlen(conn->uri)<=1){
 		mg_send_header(conn, "Content-Type", "text/html");
 
-		strncpy(buffer, "", sizeof(buffer));
- 
 		segmento_inicial(buffer, sizeof(buffer));
 
 		segmento_final(buffer, sizeof(buffer));
