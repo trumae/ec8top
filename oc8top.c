@@ -6,6 +6,7 @@
 #include "bateria.h"
 #include "numprocessos.h"
 #include "infomemoria.h"
+#include "cpu_usage.h"
 #include "layout.h"
 
 #define tamanho_buffer 150000
@@ -36,11 +37,14 @@ static int ev_handler(struct mg_connection *conn,
 		mg_printf_data(conn, buffer);
 		return MG_TRUE;
 
-
 	}
+
         if (strcmp (conn->uri, "/dinamic_numprocessos") == 0){
 
 		mg_send_header(conn, "Content-Type", "text/html");
+
+		//acrescenta as informações sobre o Uso da CPU
+		cpu_resultado(buffer, sizeof(buffer));
 
 		//acrescenta as informações da quantidade de processos sendo executados.
 		numprocessos(buffer, sizeof(buffer));
@@ -59,6 +63,7 @@ static int ev_handler(struct mg_connection *conn,
 		mg_printf_data(conn, buffer);
 		return MG_TRUE;
 	}
+
 	if (strcmp (conn->uri, "/dinamic_bateria") == 0){
 
 		mg_send_header(conn, "Content-Type", "text/html");
@@ -69,7 +74,6 @@ static int ev_handler(struct mg_connection *conn,
 		mg_printf_data(conn, buffer);
 		return MG_TRUE;
 	}
-
 
 	//se nao tiver nada na url ele executa esse texto, caso contrario execut a a url
 	if(strlen(conn->uri)<=1){
