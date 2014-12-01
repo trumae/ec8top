@@ -16,15 +16,13 @@ char buffer[100];
 /*abre o proc/stat */
   f = fopen("/proc/stat", "r");
   if (!f) {
-	strncat(buf, "Erro: N&atildeo foi poss&iacutevel ler /proc/stat<br>", sizeof(buffer));
-    	fprintf(stderr, "Erro: Não foi possível ler /proc/stat\n");
+	strncat(buf, "Error: Can't read the /proc/stat<br>", sizeof(buffer));
     	return -1;
   }
 
   /*os contadores da CPU estão na primeira linha */
   if (!fgets(buf, 256, f)) {
-	strncat(buf, "Erro: Contadores da CPU inv&aacutelidos /proc/stat<br>", sizeof(buffer));
-    fprintf(stderr, "error: invalid cpu counters in /proc/stat \n");
+	strncat(buf, "Error: Invalid cpu counters in /proc/stat<br>", sizeof(buffer));
     err = -1;
     goto out;
   }
@@ -66,7 +64,7 @@ int cpu_resultado(char *b, size_t s){// escreve o resultado em html
 
 	//escreve no html
 	/* o segundo %(do html) gera dois warnig oqe nao interfere na na operação do código*/
-	snprintf(buffer,500,"<p>Utiliza&ccedil&atildeo do Processador: %3.2f%%</p>\r\n", cpu_usage(&cpu_cnt_start, &cpu_cnt_end));
+	snprintf(buffer,500,"<p>CPU Usage: %3.2f%%<br>\r\n", cpu_usage(&cpu_cnt_start, &cpu_cnt_end));
 	
 	//coloca as informacoes no buffer do projeto
 	strncat(b, buffer, s);
