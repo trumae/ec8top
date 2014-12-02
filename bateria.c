@@ -64,7 +64,7 @@ int bateria(char *b, size_t s){
     fclose(arquivo);
     
     //coloca as informacoes no buffer da funcao
-    snprintf(buffer,TAMBUFF, "<p>Bateria: %.0f%%</p>", valor);
+    snprintf(buffer,TAMBUFF, "<p><b>Battery:</b> %.0f%%</p>", valor);
     
     //coloca as informacoes no buffer do projeto
     strncat(b, buffer, s);
