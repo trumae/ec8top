@@ -64,7 +64,7 @@ int cpu_resultado(char *b, size_t s){// escreve o resultado em html
 
 	//escreve no html
 	/* o segundo %(do html) gera dois warnig oqe nao interfere na na operação do código*/
-	snprintf(buffer,500,"<p>CPU Usage: %3.2f%%<br>\r\n", cpu_usage(&cpu_cnt_start, &cpu_cnt_end));
+	snprintf(buffer,500,"<p><b>CPU Usage:</b> %3.2f%%<br>\r\n", cpu_usage(&cpu_cnt_start, &cpu_cnt_end));
 	
 	//coloca as informacoes no buffer do projeto
 	strncat(b, buffer, s);

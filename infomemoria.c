@@ -16,7 +16,7 @@ int infomemoria(char *b, size_t s) {//Função que que mostra status da memoria 
 	buffer[0] = '\x0';
 	
 	/*impressao das informacoes*/
-	snprintf(buffer,500, "<p>Total RAM: %5.1f MB<br>Total RAM in use: %5.1f MB<br>Total RAM Free : %5.1f MB</p>",
+	snprintf(buffer,500, "<p><b>Total RAM:</b> %5.1f MB<br><b>Total RAM in Use:</b> %5.1f MB<br><b>Total RAM Free:</b> %5.1f MB</p>",
        		si.totalram / megabyte , (si.totalram - si.freeram) / megabyte , si.freeram / megabyte);
 
 	//acrescenta ao buffer do projeto os dados contidos no buffer da função
