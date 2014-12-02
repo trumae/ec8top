@@ -7,6 +7,7 @@
 #include "numprocessos.h"
 #include "infomemoria.h"
 #include "cpu_usage.h"
+#include "load_avarege.h"
 #include "layout.h"
 
 #define tamanho_buffer 150000
@@ -45,6 +46,9 @@ static int ev_handler(struct mg_connection *conn,
 
 		//acrescenta as informações sobre o Uso da CPU
 		cpu_resultado(buffer, sizeof(buffer));
+
+		//acrescenta as informações sobre o Load Avarege
+		load_avarege(buffer, sizeof(buffer));
 
 		//acrescenta as informações da quantidade de processos sendo executados.
 		numprocessos(buffer, sizeof(buffer));
